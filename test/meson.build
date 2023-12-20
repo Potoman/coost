@@ -1,0 +1,41 @@
+progs = [['chan', 'co/chan.cc'],
+         ['co', 'co/co.cc'],
+         ['go', 'co/go.cc'],
+         ['nco', 'co/nco.cc'],
+         ['pool', 'co/pool.cc'],
+         ['wg', 'co/wg.cc'],
+         ['yield', 'co/yield.cc'],
+         ['j2s', 'j2s/j2s.cc'],
+         ['easy', 'so/easy.cc'],
+         ['echo', 'so/echo.cc'],
+         ['http_cli', 'so/http_cli.cc'],
+         ['http_serv', 'so/http_serv.cc'],
+         ['rpc', 'so/rpc.cc'],
+         ['rpclient', 'so/rpclient.cc'],
+         ['ssl', 'so/ssl.cc'],
+         ['tcp', 'so/tcp.cc'],
+         ['tcp2', 'so/tcp2.cc'],
+         ['udp', 'so/udp.cc'],
+         ['bm', 'bm.cc'],
+         ['closure', 'closure.cc'],
+         ['cout', 'cout.cc'],
+         ['defer', 'defer.cc'],
+         ['err', 'err.cc'],
+         ['fast', 'fast.cc'],
+         ['flag', 'flag.cc'],
+         ['json', 'json.cc'],
+         ['log', 'log.cc'],
+         ['mem', 'mem.cc'],
+         ['stack', 'stack.cc'],
+         ['str', 'str.cc'],
+         ['tasked', 'tasked.cc'],
+         ['time', 'time.cc'],
+         ['tw', 'tw.cc'],
+         ['xx', 'xx.cc']
+         ]
+
+foreach p : progs
+  exe = executable(p[0], p[1],
+    dependencies: co_dep)
+  test(p[0], exe)
+endforeach
