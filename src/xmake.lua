@@ -39,7 +39,7 @@ target("libco")
         set_configvar("COOST_SHARED", 0)
     end
     set_configvar("CACHE_LINE_SIZE", "$(cache_line_size)")
-    add_configfiles("../include/co/config.h.in", {filename = "../include/co/config.h"})
+    add_configfiles("../include/co/config.h.in", {filename = "../include/co/config.h", pattern = "@(.-)@"})
 
     if is_plat("windows", "mingw") then
         add_defines("WIN32_LEAN_AND_MEAN")
