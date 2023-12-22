@@ -1,0 +1,79 @@
+name: Linux Meson
+
+on:
+  pull_request:
+    branches:
+      - master
+  push:
+    branches:
+      - master
+
+jobs:
+  build_gcc:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Setup Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+      - name: Setup Meson
+        run: pip install meson
+
+      - name: Tests
+        run: |
+          meson setup --native-file native-gcc.ini build
+          meson compile -C build
+          meson test -C build
+
+  build_clang:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Setup Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+      - name: Setup Meson
+        run: pip install meson
+
+      - name: Tests
+        run: |
+          meson setup --native-file native-clang.ini build
+          meson compile -C build
+          meson test -C build
+
+  build_clang_sanitizer:
+    strategy:
+      matrix:
+        os: [ubuntu-latest]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+      - name: Setup Ninja
+        uses: seanmiddleditch/gha-setup-ninja@master
+      - name: Setup Meson
+        run: pip install meson
+
+      - name: Tests
+        run: |
+          meson setup --native-file native-clang-sanitizer.ini build
+          meson compile -C build
+          meson test -C build -v
