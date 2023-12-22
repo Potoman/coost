@@ -6,7 +6,12 @@ project('c++ coost', 'c', 'cpp',
 args_coost = ['-Wall', '-O2', '-g', '-Wno-sign-compare', '-Wno-strict-aliasing']
 add_global_arguments(args_coost, language : 'c')
 add_global_arguments(args_coost, language : 'cpp')
-add_project_link_arguments('-lws2_32', language : 'cpp')
+
+if host_machine.system() == 'windows'
+  add_project_link_arguments('-lws2_32', language : 'cpp')
+elif host_machine.system() == 'linux'
+  add_project_link_arguments('-ldl', '-latomic', '-lpthread', language : 'cpp')
+endif
 
 subdir('src')
 subdir('gen')

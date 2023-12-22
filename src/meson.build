@@ -7,8 +7,8 @@ configure_file(input : '../include/co/config.h.in',
                configuration : conf_data)
 
 incdir = include_directories('.', '../include')
-co = static_library('co',
-    'benchmark.cc',
+
+sources = ['benchmark.cc',
     'cout.cc',
     'error.cc',
     'fast.cc',
@@ -35,11 +35,6 @@ co = static_library('co',
     'co/sock_win.cc',
     'co/sock.cc',
     'co/context/context.S',
-    'co/detours/creatwth.cpp',
-    'co/detours/detours.cpp',
-    'co/detours/disasm.cpp',
-    'co/detours/image.cpp',
-    'co/detours/modules.cpp',
     #'co/detours/uimports.cpp', not list at all
     'co/epoll/epoll.cc',
     'co/epoll/iocp.cc',
@@ -52,11 +47,22 @@ co = static_library('co',
     'hash/sha256.cc',
     'hash/url.cc',
     'log/log.cc',
-    'log/StackWalker.cpp',
     'so/http.cc',
     'so/rpc.cc',
     'so/ssl.cc',
     'so/tcp.cc',
+]
+if host_machine.system() == 'windows'
+    sources += ['log/StackWalker.cpp',
+        'co/detours/creatwth.cpp',
+        'co/detours/detours.cpp',
+        'co/detours/disasm.cpp',
+        'co/detours/image.cpp',
+        'co/detours/modules.cpp',
+    ]
+endif
+co = static_library('co',
+    sources,
     include_directories: incdir
 )
 co_dep = declare_dependency(
